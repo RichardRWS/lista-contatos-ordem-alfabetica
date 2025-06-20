@@ -130,7 +130,47 @@ int insert(tlista *l, contato c, int p){
 	   return 0;
 	}
     
-}//inserir
+}//insert
+
+void lerContato(contato* c){
+    printf("Informe os dados do novo contato: \n");
+    printf("Nome: \n");
+    scanf("%99s",c->nome);getchar();//limita caracteres para impedir estouro de buffer
+    printf("Sobrenome: ");
+    scanf("%99s",c->sobrenome);getchar();
+    printf("Email: \n");
+    scanf("%149s",c->email);getchar();
+    printf("Telefone: \n");
+    scanf("%14s",c->telefone);getchar();
+    printf("CPF: \n");
+    scanf("%14s",c->cpf);getchar();
+}//lerContato
+
+contato* criarContato(){
+    contato* c = (contato*) malloc(sizeof(contato));
+    if(c==NULL){
+        printf("Erro na alocação de memória!\n");
+        return NULL;
+    }
+    lerContato(c);
+    return c;
+}//criarContato
+
+
+
+void listar(tlista *l){
+    tno* aux_next;
+    aux_next = l->first;
+    if(l->size ==0){
+        printf("Lista vazia!\n");
+    }
+    else{
+        for (int i=0; i<tamanho(l);i++){
+            printf("%d, %s\n",i,aux_next->dado.nome);
+            aux_next = aux_next->next;
+        }
+    }
+}//listar
 
 
 //NÃO IMPLEMENTADO. ISSO É RESTO DO CODIGO DE PILHAS
