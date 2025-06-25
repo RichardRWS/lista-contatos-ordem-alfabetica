@@ -26,7 +26,7 @@ int tamanho(tlista *l){
 int insert(tlista *l, contato c, int p){
     
     if(p>tamanho(l) || p<0){ ////encontrar posição p; se não existe ou não é a ultima retornar erro
-        printf("Posicao invalida!");
+        printf("Posicao invalida!\n");
         return 0;
     }
     
@@ -77,39 +77,58 @@ int insert(tlista *l, contato c, int p){
 	  }
 	  
 	   (l->size)++;
-	   printf("Contato inserido com sucesso na lista!\n");
+	   printf("\nContato inserido com sucesso na lista!\n");
 	   return 1;
 	}
 	else{
-	   printf("Erro na alocacao da memoria. Tente novamente.\n");
+	   printf("\nErro na alocacao da memoria. Tente novamente.\n");
 	   return 0;
 	}
     
 }//insert
 
+int posicao(tlista *l, contato c) {
+    tno* atual = l->first;
+    int pos = 0;
+
+    char entrada[200];
+    strcpy(entrada, c.sobrenome);
+    strcat(entrada, c.nome);
+
+    while (atual != NULL) {
+        char comparada[200];
+        strcpy(comparada, atual->dado.sobrenome);
+        strcat(comparada, atual->dado.nome);
+        
+        if (strcmp(entrada, comparada) <= 0) {// Se a entrada for menor ou ingual, a posicao de insercoa eh a atual
+            return pos;
+        }
+        
+        atual = atual->next;
+        pos++;
+    }
+    return l->size;//se chegar ao final da lista, entra no final.
+}
+
 void lerContato(contato* c){
-    printf("Informe os dados do novo contato: \n");
-    printf("Nome: \n");
+    printf("Informe os dados do novo contato... \n");
+    printf("Nome: ");
     scanf("%99s",c->nome);getchar();//limita caracteres para impedir estouro de buffer
     printf("Sobrenome: ");
     scanf("%99s",c->sobrenome);getchar();
-    printf("Email: \n");
+    printf("Email: ");
     scanf("%149s",c->email);getchar();
-    printf("Telefone: \n");
+    printf("Telefone: ");
     scanf("%14s",c->telefone);getchar();
-    printf("CPF: \n");
+    printf("CPF: ");
     scanf("%14s",c->cpf);getchar();
 }//lerContato
 
-contato* criarContato(){
-    contato* c = (contato*) malloc(sizeof(contato));
-    if(c==NULL){
-        printf("Erro na alocação de memória!\n");
-        return NULL;
-    }
-    lerContato(c);
+contato criarContato(){
+    contato c;
+    lerContato(&c);
     return c;
-}//criarContato
+}
 
 
 
@@ -121,33 +140,12 @@ void listar(tlista *l){
     }
     else{
         for (int i=0; i<tamanho(l);i++){
-            printf("%d, %s\n",i,aux_next->dado.nome);
+            printf("%d, %s %s\n",i,aux_next->dado.sobrenome, aux_next->dado.nome);
             aux_next = aux_next->next;
         }
     }
+    printf("\n");
 }//listar
 
 
-//NÃO IMPLEMENTADO. ISSO É RESTO DO CODIGO DE PILHAS
-int remover(tfila *f, int *numero){
-    if(empty(f)==0){// VERIFICAR SE NÃO ESTÁ VAZIA;
-        tipoNo* temp = f->head;// COPIAR INFORMAÇÕES DO PRIMEIRO
-        *numero = temp->dado;
-        if(f->head ==f->tail){// SE HEAD==TAIL ENTAO AMBOS RECEBERÃO NULL
-            f->head = NULL;
-            f->tail =NULL;
-        }
-        else{
-            f->head = f->head->prox;//ANDAR A FILA (F->HEAD=F->HEAD->PROX)
-            f->head->ant = NULL;//O anterior do novo Head, aponta para NULO (F->HEAD->ANT=NULL)
-        }
-        (f->size)--;//F->SIZE--;
-        free(temp);//DESALOCAR MEMÓRIA
-        return 1;
-    }
-    else{
-        printf("Comando remover não executado. Fila está vazia!\n");
-        return 0;
-    } 
-}//remover
 
