@@ -129,25 +129,46 @@ void listar(tlista *l){
 
 
 //NÃO IMPLEMENTADO. ISSO É RESTO DO CODIGO DE PILHAS
-int remover(tfila *f, int *numero){
-    if(empty(f)==0){// VERIFICAR SE NÃO ESTÁ VAZIA;
-        tipoNo* temp = f->head;// COPIAR INFORMAÇÕES DO PRIMEIRO
-        *numero = temp->dado;
-        if(f->head ==f->tail){// SE HEAD==TAIL ENTAO AMBOS RECEBERÃO NULL
-            f->head = NULL;
-            f->tail =NULL;
-        }
-        else{
-            f->head = f->head->prox;//ANDAR A FILA (F->HEAD=F->HEAD->PROX)
-            f->head->ant = NULL;//O anterior do novo Head, aponta para NULO (F->HEAD->ANT=NULL)
-        }
-        (f->size)--;//F->SIZE--;
-        free(temp);//DESALOCAR MEMÓRIA
-        return 1;
-    }
-    else{
-        printf("Comando remover não executado. Fila está vazia!\n");
+int remover(tlista *l, int p){
+    
+    if(empty(l)==1 || p < 0 || p >= l->size) {
+        printf("Posicao inavalida!\n");
         return 0;
-    } 
+    } //SE A LISTA ESTIVER VAZIA
+    
+    tno *remover_no;
+
+    if (l->size == 1) {
+        remover_no = l->first;
+        l->first = NULL;
+        l->last = NULL;
+    }// SE HOUVER APENAS UM ELEMENTO NA LISTA
+    
+    else if (p == 0) {
+        remover_no = l->first;
+        l->first = remover_no->next;
+        l->first->prev = NULL;
+    } //Remover do inicio da lista
+    
+    else if (p == l->size - 1) {
+        remover_no = l->last;
+        l->last = remover_no->prev;
+        l->last->next = NULL;
+    } // REMOVER DO FIM DA LISTA
+    
+    else {
+        remover_no = l->first;
+        for (int i = 0; i < p; i++) {
+            remover_no = remover_no->next;
+        }
+        
+        remover_no->prev->next = remover_no->next;
+        remover_no->next->prev = remover_no->prev;
+    }// REMOVER DE UMA POSICAO INTERMEDIARIA
+
+    free(remover_no);
+    l->size--;
+    printf("Contato removido com sucesso!\n");
+    return 1;
 }//remover
 

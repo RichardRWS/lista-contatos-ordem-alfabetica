@@ -32,5 +32,5 @@ contato* criarContato();
 
 void listar(tlista *l);
 
-
+int remover(tlista *l, int p);
 
