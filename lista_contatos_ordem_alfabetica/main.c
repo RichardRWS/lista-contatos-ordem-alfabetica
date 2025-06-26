@@ -21,6 +21,20 @@ int main()
     
     int opcao = 0;
     
+    // Inserção automática de 5 contatos para testes
+    contato c1 = {"Ana", "Silva", "ana@email.com", "111111111", "000000001"};
+    contato c2 = {"Bruno", "Almeida", "bruno@email.com", "222222222", "000000002"};
+    contato c3 = {"Carlos", "Pereira", "carlos@email.com", "333333333", "000000003"};
+    contato c4 = {"Daniela", "Costa", "daniela@email.com", "444444444", "000000004"};
+    contato c5 = {"Eduardo", "Moura", "eduardo@email.com", "555555555", "000000005"};
+
+    insert(plista, c1, posicao(plista, c1));
+    insert(plista, c2, posicao(plista, c2));
+    insert(plista, c3, posicao(plista, c3));
+    insert(plista, c4, posicao(plista, c4));
+    insert(plista, c5, posicao(plista, c5));
+
+    
     /*/Insere 1ro contato na lista
     contato a = criarContato();
     insert(plista,a,posicao(plista,a));

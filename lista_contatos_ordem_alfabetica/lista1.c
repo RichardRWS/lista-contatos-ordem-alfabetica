@@ -283,7 +283,6 @@ int remover(tlista *l, int p) {
 
 int main()
 {
-
     //Iniciacao da variaveis, criacao da lista
     tlista lista;
     tlista *plista =&lista; 
@@ -291,7 +290,23 @@ int main()
     
     int opcao = 0;
     
-    //Insere 1ro contato na lista
+    
+    // Inserção automática de 5 contatos para testes
+    contato c1 = {"Ana", "Silva", "ana@email.com", "111111111", "000000001"};
+    contato c2 = {"Bruno", "Almeida", "bruno@email.com", "222222222", "000000002"};
+    contato c3 = {"Carlos", "Pereira", "carlos@email.com", "333333333", "000000003"};
+    contato c4 = {"Daniela", "Costa", "daniela@email.com", "444444444", "000000004"};
+    contato c5 = {"Eduardo", "Moura", "eduardo@email.com", "555555555", "000000005"};
+
+    insert(plista, c1, posicao(plista, c1));
+    insert(plista, c2, posicao(plista, c2));
+    insert(plista, c3, posicao(plista, c3));
+    insert(plista, c4, posicao(plista, c4));
+    insert(plista, c5, posicao(plista, c5));
+	
+    
+    
+    /*/Insere 1ro contato na lista
     contato a = criarContato();
     insert(plista,a,posicao(plista,a));
     listar(plista);
@@ -311,7 +326,7 @@ int main()
     insert(plista,d,posicao(plista,d));
     listar(plista);
     
-    //Menu - Laco de repeticao do while para permanecer no menu
+    *///Menu - Laco de repeticao do while para permanecer no menu
     
     do{
         //Menu de opcoes
@@ -334,29 +349,38 @@ int main()
         printf("\n");
 	    
 	    switch(opcao){
-	        
-	        //OPCAO CONSULTA DE CODIGO
 	        case 1:
 	            listar(plista);
 	            consultar(plista);
                 break;
-	           
-		    //OPCAO INSERCAO DE CODIGO
-		    case 2:
-		        //ocupados = inserir(lista, ocupados);
-		        //exibe_lista(lista, ocupados, tamanho);
-		      break;
-		      
-		    // OPCAO EXCLUIR
-		    case 3:
-		        //ocupados = excluir(lista, ocupados);
-                //exibe_lista(lista, ocupados, tamanho);
-                break;
-		    //OPCAO EXIBIR      
+		    case 2: {
+                    //ocupados = inserir(lista, ocupados);
+                    //exibe_lista(lista, ocupados, tamanhttps://www.onlinegdb.com/online_c_compiler#tab-stderrho);
+                    contato c = criarContato();
+                    int p = posicao(plista, c);
+                    insert(plista, c, p);
+                    listar(plista);
+                    break;
+    		    }
+		    case 3: {
+                    //ocupados = excluir(lista, ocupados);
+                    //exibe_lista(lista, ocupados, tamanho);
+                    listar(plista);
+                    printf("Informe a posicao do contato a remover: ");
+                    int p;
+                    if (scanf("%d", &p) != 1) {
+                        printf("Entrada invalida! Digite um numero inteiro.\n");
+                        while (getchar() != '\n');
+                        break;
+                    }
+                    getchar();
+                    remover(plista, p);
+                    listar(plista);
+                    break;
+		    }
 		    case 4:
 		        listar(plista);
 		        break;
-		    //OPCAO DO TESTE DE FUNCIONALIDADE
 		    case 5:
 		        //implementar
 		        break;
@@ -364,16 +388,9 @@ int main()
 		        printf("Encerrando o programa...\n");
 		        break;
 		    default:
-		    printf("Opção inválida.\n");
-		    
-		    
-		    
-	    }//switch(opcao)
-	    
+		        printf("Opção inválida.\n");
+	    }
     }while(opcao!=0);
-    
-    
-
 
     liberarMemoria(plista);
     return 0;
